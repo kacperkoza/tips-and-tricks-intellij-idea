@@ -1,0 +1,50 @@
+package com.presentation.intellij.tips.offer
+
+import com.presentation.intellij.tips.infrastracture.account.AccountStatus
+import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
+import com.presentation.intellij.tips.offer.infrastracture.api.Offer
+import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
+import com.presentation.intellij.tips.util.paginate
+import org.springframework.stereotype.Component
+import java.util.stream.Collectors
+
+@Component
+class OffersServiceTwo(
+    private val offersRepository: OffersRepository,
+    private val accountStatusClient: AccountStatusClient
+) {
+
+    fun getOffers(limit: Int?, offset: Int?): List<Offer> {
+        validate(limit, offset)
+        val offers = offersRepository.getOffers()
+        return getOffersPaginated(limit, offset, offers)
+    }
+
+    fun add(offer: Offer, accountId: String) {
+        if (listOf(AccountStatus.TO_ACTIVATE, AccountStatus.BLOCKED)
+                .contains(accountStatusClient.getAccountStatus(accountId))) {
+            throw IncorrectAccountStatusException()
+        }
+        offersRepository.addOffer(accountId, offer)
+    }
+
+    private fun validate(limit: Int?, offset: Int?) {
+        if ((limit != null && limit <= 0) || (offset != null && offset <= 0)) {
+            throw InvalidPaginationExceptionKt()
+        }
+    }
+
+    private fun getOffersPaginated(limit: Int?, offset: Int?, offers: List<Offer>): List<Offer> {
+        var offersPaginated: List<Offer> = emptyList()
+        if (offset != null && limit != null) {
+            offersPaginated = offers.drop(offset).take(limit)
+        } else if (offset != null) {
+            offers.drop(offset)
+        } else if (limit != null) {
+            offers.take(limit)
+        }
+        return offersPaginated
+    }
+}
+
+class InvalidPaginationExceptionKt : RuntimeException()

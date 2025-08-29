@@ -1,1 +1,8 @@
-# tips-and-tricks-intellij-idea
+# Tips and tricks in IntelliJ IDEA 
+
+
+
+
+
+
+

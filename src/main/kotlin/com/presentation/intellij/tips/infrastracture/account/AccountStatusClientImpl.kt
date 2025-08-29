@@ -1,0 +1,11 @@
+package com.presentation.intellij.tips.infrastracture.account
+
+import org.springframework.stereotype.Component
+
+@Component
+class AccountStatusClientImpl : AccountStatusClient {
+
+    override fun getAccountStatus(accountId: String): AccountStatus {
+        return AccountStatus.ACTIVE
+    }
+}
