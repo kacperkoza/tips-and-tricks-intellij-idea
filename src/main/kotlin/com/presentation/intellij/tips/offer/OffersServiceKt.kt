@@ -4,9 +4,7 @@ import com.presentation.intellij.tips.infrastracture.account.AccountStatus
 import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
 import com.presentation.intellij.tips.offer.infrastracture.api.Offer
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
-import com.presentation.intellij.tips.util.paginate
 import org.springframework.stereotype.Component
-import java.util.stream.Collectors
 
 @Component
 class OffersServiceTwo(
