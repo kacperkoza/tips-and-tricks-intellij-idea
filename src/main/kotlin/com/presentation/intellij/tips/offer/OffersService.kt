@@ -142,7 +142,6 @@ class OffersService(
     }
 }
 
-// New exception classes for better error handling
 class OfferNotFoundException(message: String) : RuntimeException(message)
 class UnauthorizedOfferModificationException(message: String) : RuntimeException(message)
 class OfferValidationException(message: String) : RuntimeException(message)
