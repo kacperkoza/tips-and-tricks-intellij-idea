@@ -2,12 +2,10 @@ package com.presentation.intellij.tips.offer
 
 import com.presentation.intellij.tips.infrastracture.account.AccountStatus
 import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
-import com.presentation.intellij.tips.offer.infrastracture.api.Offer
 import com.presentation.intellij.tips.offer.infrastracture.repository.InMemoryRepository
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
 import spock.lang.Specification
 import spock.lang.Unroll
-
 
 class OffersServiceTest extends Specification {
 

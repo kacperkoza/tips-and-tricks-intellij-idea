@@ -2,12 +2,11 @@ package com.presentation.intellij.tips.offer
 
 import com.presentation.intellij.tips.infrastracture.account.AccountStatus
 import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
-import com.presentation.intellij.tips.offer.infrastracture.api.Offer
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
 import org.springframework.stereotype.Component
 
 @Component
-class OffersServiceTwo(
+class OffersService(
     private val offersRepository: OffersRepository,
     private val accountStatusClient: AccountStatusClient
 ) {
@@ -18,9 +17,13 @@ class OffersServiceTwo(
         return getOffersPaginated(limit, offset, offers)
     }
 
-    fun add(offer: Offer, accountId: String) {
-        if (listOf(AccountStatus.TO_ACTIVATE, AccountStatus.BLOCKED)
-                .contains(accountStatusClient.getAccountStatus(accountId))) {
+    fun add(offer: Offer, accountId: String, requestId: String) {
+        if (listOf(AccountStatus.TO_ACTIVATE, AccountStatus.BLOCKED).contains(
+                accountStatusClient.getAccountStatus(
+                    accountId
+                )
+            )
+        ) {
             throw IncorrectAccountStatusException()
         }
         offersRepository.addOffer(accountId, offer)
@@ -28,7 +31,7 @@ class OffersServiceTwo(
 
     private fun validate(limit: Int?, offset: Int?) {
         if ((limit != null && limit <= 0) || (offset != null && offset <= 0)) {
-            throw InvalidPaginationExceptionKt()
+            throw InvalidPaginationExceptionTwo()
         }
     }
 
@@ -43,6 +46,7 @@ class OffersServiceTwo(
         }
         return offersPaginated
     }
+
 }
 
-class InvalidPaginationExceptionKt : RuntimeException()
+class InvalidPaginationExceptionTwo : RuntimeException()

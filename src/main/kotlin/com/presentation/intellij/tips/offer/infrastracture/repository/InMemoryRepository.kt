@@ -1,6 +1,6 @@
 package com.presentation.intellij.tips.offer.infrastracture.repository
 
-import com.presentation.intellij.tips.offer.infrastracture.api.Offer
+import com.presentation.intellij.tips.offer.Offer
 import org.springframework.stereotype.Repository
 import java.net.URI
 

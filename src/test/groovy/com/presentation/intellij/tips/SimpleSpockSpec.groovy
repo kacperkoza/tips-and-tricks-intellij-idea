@@ -25,11 +25,11 @@ class SimpleSpockSpec extends Specification {
         a + b == expected
 
         where: 'test data combinations'
-        a  | b  | expected
-        1  | 1  | 2
-        2  | 3  | 5
-        10 | 5  | 15
-        -1 | 1  | 0
+        a  | b | expected
+        1  | 1 | 2
+        2  | 3 | 5
+        10 | 5 | 15
+        -1 | 1 | 0
     }
 
     def 'should demonstrate exception handling'() {
