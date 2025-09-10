@@ -124,7 +124,7 @@ class OffersService(
     }
 
     private fun validate(limit: Int?, offset: Int?) {
-        if ((limit != null && limit <= 0) || (offset != null && offset <= 0)) {
+        if ((limit != null && limit < 0) || (offset != null && offset < 0)) {
             throw InvalidPaginationException()
         }
     }
