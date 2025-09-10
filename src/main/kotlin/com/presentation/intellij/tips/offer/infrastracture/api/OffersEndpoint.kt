@@ -11,7 +11,7 @@ import java.math.BigDecimal
 
 @RestController
 @RequestMapping("/api/offers")
-class OffersEndpointV2(
+class OffersEndpoint(
     private val offersService: OffersService
 ) {
 

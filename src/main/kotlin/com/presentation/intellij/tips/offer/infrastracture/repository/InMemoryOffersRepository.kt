@@ -1,27 +1,52 @@
 package com.presentation.intellij.tips.offer.infrastracture.repository
 
-import com.presentation.intellij.tips.offer.*
+import com.presentation.intellij.tips.offer.Offer
+import com.presentation.intellij.tips.offer.OfferCategory
+import com.presentation.intellij.tips.offer.OfferStatus
 import org.springframework.stereotype.Repository
 import java.math.BigDecimal
 import java.net.URI
 import java.time.LocalDateTime
-import java.util.*
 
 @Repository
 class InMemoryOffersRepository : OffersRepository {
 
     private val offers = mutableMapOf<String, Offer>()
+    private val offersById = mutableMapOf<Long, Offer>()
 
     override fun addOffer(accountId: String, offer: Offer) {
         offers[accountId] = offer
+        offersById[offer.id] = offer
     }
 
     override fun getOffers(): List<Offer> {
         return if (offers.isEmpty()) {
-            getMockOffers()
+            val mockOffers = getMockOffers()
+            // Add mock offers to our internal storage for consistency
+            mockOffers.forEach { offer ->
+                offersById[offer.id] = offer
+            }
+            mockOffers
         } else {
             offers.values.toList()
         }
+    }
+
+    override fun getOfferById(offerId: Long): Offer? {
+        // If we don't have any offers yet, initialize with mock data
+        if (offersById.isEmpty()) {
+            getOffers() // This will populate offersById with mock data
+        }
+        return offersById[offerId]
+    }
+
+    override fun updateOffer(offer: Offer): Offer {
+        offersById[offer.id] = offer
+        // Also update in the accountId-based map if it exists
+        offers.entries.find { it.value.id == offer.id }?.let { entry ->
+            offers[entry.key] = offer
+        }
+        return offer
     }
 
     private fun getMockOffers(): List<Offer> = listOf(
@@ -73,5 +98,5 @@ class InMemoryOffersRepository : OffersRepository {
             createdAt = LocalDateTime.now().minusHours(2),
             tags = setOf("bicycle", "mountain", "sports")
         )
-    )
+    ).also { print("some message") }
 }

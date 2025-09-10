@@ -52,7 +52,12 @@ class OffersService(
 
     fun add(offer: Offer, accountId: String, requestId: String): ValidationResult {
         // Validate account status
-        if (listOf(AccountStatus.SUSPENDED, AccountStatus.ARCHIVED, AccountStatus.TO_ACTIVATE, AccountStatus.BLOCKED).contains(
+        if (listOf(
+                AccountStatus.SUSPENDED,
+                AccountStatus.ARCHIVED,
+                AccountStatus.TO_ACTIVATE,
+                AccountStatus.BLOCKED
+            ).contains(
                 accountStatusClient.getAccountStatus(accountId)
             )
         ) {
@@ -71,8 +76,7 @@ class OffersService(
     }
 
     fun updateOfferStatus(offerId: Long, newStatus: OfferStatus, accountId: String): Offer {
-        val offers = offersRepository.getOffers()
-        val offer = offers.find { it.id == offerId }
+        val offer = offersRepository.getOfferById(offerId)
             ?: throw OfferNotFoundException("Offer with id $offerId not found")
 
         // Check if user can modify this offer
@@ -85,7 +89,7 @@ class OffersService(
             OfferStatus.ACTIVE -> offer.activate()
             OfferStatus.SUSPENDED -> offer.suspend()
             OfferStatus.EXPIRED -> offer.expire()
-            OfferStatus.DRAFT -> offer.copy(status = OfferStatus.DRAFT)
+            OfferStatus.DRAFT -> offer.copy(status = OfferStatus.DRAFT, updatedAt = java.time.LocalDateTime.now())
         }
 
         // Validate the updated offer
@@ -98,9 +102,8 @@ class OffersService(
             )
         }
 
-        // In a real implementation, you would update the offer in the repository
-        // For now, we'll just return the updated offer
-        return updatedOffer
+        // Save the updated offer back to the repository
+        return offersRepository.updateOffer(updatedOffer)
     }
 
     fun getOffersByCategory(category: OfferCategory, limit: Int = 20, offset: Int = 0): List<Offer> {
