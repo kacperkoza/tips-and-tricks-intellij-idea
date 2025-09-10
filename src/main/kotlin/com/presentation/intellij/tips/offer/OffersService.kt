@@ -31,7 +31,7 @@ class OffersService(
 
     private fun validate(limit: Int?, offset: Int?) {
         if ((limit != null && limit <= 0) || (offset != null && offset <= 0)) {
-            throw InvalidPaginationExceptionTwo()
+            throw InvalidPaginationException()
         }
     }
 
@@ -40,13 +40,13 @@ class OffersService(
         if (offset != null && limit != null) {
             offersPaginated = offers.drop(offset).take(limit)
         } else if (offset != null) {
-            offers.drop(offset)
+            offersPaginated = offers.drop(offset)
         } else if (limit != null) {
-            offers.take(limit)
+            offersPaginated = offers.take(limit)
         }
         return offersPaginated
     }
 
 }
 
-class InvalidPaginationExceptionTwo : RuntimeException()
+class InvalidPaginationException : RuntimeException()

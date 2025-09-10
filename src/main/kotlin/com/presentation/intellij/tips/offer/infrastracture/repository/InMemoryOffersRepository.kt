@@ -3,11 +3,17 @@ package com.presentation.intellij.tips.offer.infrastracture.repository
 import com.presentation.intellij.tips.offer.Offer
 import org.springframework.stereotype.Repository
 import java.net.URI
+import java.util.*
 
 @Repository
-class InMemoryRepository : OffersRepository {
+class InMemoryOffersRepository : OffersRepository {
 
-    private val offers = mutableMapOf<Long, Offer>()
+    private val offers = HashMap<String, Offer>()
+
+
+    override fun addOffer(accountId: String, offer: Offer) {
+        offers[accountId] = offer
+    }
 
     override fun getOffers(): List<Offer> {
         return if (offers.isEmpty()) {
@@ -15,10 +21,6 @@ class InMemoryRepository : OffersRepository {
         } else {
             offers.values.toList()
         }
-    }
-
-    override fun addOffer(accountId: String, offer: Offer) {
-        offers[offer.id] = offer
     }
 
     private fun getMockOffers(): List<Offer> {
@@ -32,6 +34,6 @@ class InMemoryRepository : OffersRepository {
             Offer(7L, "test", URI("https://google.pl")),
             Offer(8L, "test", URI("https://google.pl")),
         )
-
     }
+
 }

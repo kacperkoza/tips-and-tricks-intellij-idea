@@ -2,20 +2,20 @@ package com.presentation.intellij.tips.offer
 
 import com.presentation.intellij.tips.infrastracture.account.AccountStatus
 import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
-import com.presentation.intellij.tips.offer.infrastracture.repository.InMemoryRepository
+import com.presentation.intellij.tips.offer.infrastracture.repository.InMemoryOffersRepository
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
 import spock.lang.Specification
 import spock.lang.Unroll
 
 class OffersServiceTest extends Specification {
 
-    OffersRepository offersRepository = new InMemoryRepository()
+    OffersRepository offersRepository = new InMemoryOffersRepository()
     AccountStatusClient accountStatusClient = Stub(AccountStatusClient)
 
     OffersService offersService = new OffersService(offersRepository, accountStatusClient)
 
     @Unroll
-    def 'should return offers according to limit and offset'() {
+    def "should return offers according to limit and offset"() {
         when:
         List<Offer> offers = offersService.getOffers(limit, null)
 
@@ -44,7 +44,7 @@ class OffersServiceTest extends Specification {
         accountStatusClient.getAccountStatus('user-id') >> accountStatus
 
         when:
-        offersService.add(offer(), 'user-id')
+        offersService.add(offer(), 'user-id', 'any-request-id')
 
         then:
         thrown(IncorrectAccountStatusException)
