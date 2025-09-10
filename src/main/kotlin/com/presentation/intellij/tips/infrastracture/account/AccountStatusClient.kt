@@ -9,4 +9,6 @@ enum class AccountStatus {
     TO_ACTIVATE,
     BLOCKED,
     ACTIVE,
+    SUSPENDED,
+    ARCHIVED
 }
