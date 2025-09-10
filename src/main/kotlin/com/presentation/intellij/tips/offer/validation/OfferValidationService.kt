@@ -80,12 +80,15 @@ class OfferValidationService {
                     errors.add(ValidationError.ACTIVE_OFFER_NEEDS_EXPIRATION)
                 }
             }
+
             OfferStatus.EXPIRED -> {
                 if (offer.expiresAt?.isAfter(LocalDateTime.now()) == true) {
                     errors.add(ValidationError.EXPIRED_OFFER_FUTURE_EXPIRATION)
                 }
             }
-            else -> { /* No specific validation for DRAFT and SUSPENDED */ }
+
+            else -> { /* No specific validation for DRAFT and SUSPENDED */
+            }
         }
 
         // Tags validation
@@ -132,7 +135,8 @@ class OfferValidationService {
                 }
             }
 
-            else -> { /* No specific validation for other categories */ }
+            else -> { /* No specific validation for other categories */
+            }
         }
     }
 

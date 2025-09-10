@@ -5,6 +5,7 @@ import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
 import com.presentation.intellij.tips.offer.search.OfferSearchService
 import com.presentation.intellij.tips.offer.validation.OfferValidationService
+import com.presentation.intellij.tips.offer.validation.ValidationResult
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -103,6 +104,34 @@ class OffersServiceTest extends Specification {
         thrown(UnauthorizedOfferModificationException)
     }
 
+    def "should get offers by category"() {
+        when:
+        def result = offersService.getOffersByCategory(OfferCategory.ELECTRONICS, 10, 0)
+
+        then:
+        result.size() == 1
+        result[0].category == OfferCategory.ELECTRONICS
+        result[0].title == 'Gaming Laptop'
+    }
+
+    def "should get offers by category with default pagination"() {
+        when:
+        def result = offersService.getOffersByCategory(OfferCategory.FASHION, 20, 0)
+
+        then:
+        result.size() == 1
+        result[0].category == OfferCategory.FASHION
+        result[0].title == 'Winter Jacket'
+    }
+
+    def "should get active offers with default pagination"() {
+        when:
+        def result = offersService.getActiveOffers(20, 0)
+
+        then:
+        result.every { it.status == OfferStatus.ACTIVE }
+    }
+
     def "should update offer status to EXPIRED"() {
         given:
         // Skip validation for this specific test case by mocking the validation service
@@ -135,34 +164,6 @@ class OffersServiceTest extends Specification {
 
         then:
         result.status == OfferStatus.EXPIRED
-    }
-
-    def "should get offers by category"() {
-        when:
-        def result = offersService.getOffersByCategory(OfferCategory.ELECTRONICS, 10, 0)
-
-        then:
-        result.size() == 1
-        result[0].category == OfferCategory.ELECTRONICS
-        result[0].title == 'Gaming Laptop'
-    }
-
-    def "should get offers by category with default pagination"() {
-        when:
-        def result = offersService.getOffersByCategory(OfferCategory.FASHION, 20, 0)
-
-        then:
-        result.size() == 1
-        result[0].category == OfferCategory.FASHION
-        result[0].title == 'Winter Jacket'
-    }
-
-    def "should get active offers with default pagination"() {
-        when:
-        def result = offersService.getActiveOffers(20, 0)
-
-        then:
-        result.every { it.status == OfferStatus.ACTIVE }
     }
 
     @Unroll
@@ -213,11 +214,11 @@ class OffersServiceTest extends Specification {
 
     private static List<Offer> createMockOffers() {
         return [
-                createOffer(1L, "Gaming Laptop", "High-performance gaming laptop", new BigDecimal("1299.99"), OfferCategory.ELECTRONICS),
-                createOffer(2L, "Winter Jacket", "Warm winter jacket for cold weather", new BigDecimal("89.99"), OfferCategory.FASHION),
-                createOffer(3L, "Coffee Table", "Modern glass coffee table", new BigDecimal("199.99"), OfferCategory.HOME),
-                createOffer(4L, "Programming Book", "Learn Kotlin programming", new BigDecimal("49.99"), OfferCategory.BOOKS),
-                createOffer(5L, "Running Shoes", "Professional running shoes", new BigDecimal("129.99"), OfferCategory.SPORTS)
+                createOffer(1L, 'Gaming Laptop', 'High-performance gaming laptop', new BigDecimal('1299.99'), OfferCategory.ELECTRONICS),
+                createOffer(2L, 'Winter Jacket', 'Warm winter jacket for cold weather', new BigDecimal('89.99'), OfferCategory.FASHION),
+                createOffer(3L, 'Coffee Table', 'Modern glass coffee table', new BigDecimal('199.99'), OfferCategory.HOME),
+                createOffer(4L, 'Programming Book', 'Learn Kotlin programming', new BigDecimal('49.99'), OfferCategory.BOOKS),
+                createOffer(5L, 'Running Shoes', 'Professional running shoes', new BigDecimal('129.99'), OfferCategory.SPORTS)
         ]
     }
 

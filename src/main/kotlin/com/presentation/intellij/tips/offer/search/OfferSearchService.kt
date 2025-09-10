@@ -34,13 +34,13 @@ class OfferSearchService {
             val queryMatch = criteria.query?.let { query ->
                 val searchTerm = query.lowercase()
                 offer.title.lowercase().contains(searchTerm) ||
-                offer.description.lowercase().contains(searchTerm) ||
-                offer.tags.any { tag -> tag.lowercase().contains(searchTerm) }
+                        offer.description.lowercase().contains(searchTerm) ||
+                        offer.tags.any { tag -> tag.lowercase().contains(searchTerm) }
             } ?: true
 
             // Price range filter
             val priceMatch = (criteria.minPrice?.let { offer.price >= it } ?: true) &&
-                           (criteria.maxPrice?.let { offer.price <= it } ?: true)
+                    (criteria.maxPrice?.let { offer.price <= it } ?: true)
 
             // Category filter
             val categoryMatch = criteria.category?.let { offer.category == it } ?: true
