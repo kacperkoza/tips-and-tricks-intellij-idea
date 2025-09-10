@@ -4,15 +4,24 @@ import com.presentation.intellij.tips.infrastracture.account.AccountStatus
 import com.presentation.intellij.tips.infrastracture.account.AccountStatusClient
 import com.presentation.intellij.tips.offer.infrastracture.repository.InMemoryOffersRepository
 import com.presentation.intellij.tips.offer.infrastracture.repository.OffersRepository
+import com.presentation.intellij.tips.offer.search.OfferSearchService
+import com.presentation.intellij.tips.offer.validation.OfferValidationService
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import java.time.LocalDateTime
 
 class OffersServiceTest extends Specification {
 
     OffersRepository offersRepository = new InMemoryOffersRepository()
     AccountStatusClient accountStatusClient = Stub(AccountStatusClient)
 
-    OffersService offersService = new OffersService(offersRepository, accountStatusClient)
+    OffersService offersService = new OffersService(
+            offersRepository,
+            accountStatusClient,
+            new OfferValidationService(),
+            new OfferSearchService()
+    )
 
     @Unroll
     def "should return offers according to limit and offset"() {
@@ -39,6 +48,7 @@ class OffersServiceTest extends Specification {
         thrown(InvalidPaginationException)
     }
 
+    @Unroll
     def 'should throw exception when adding offer on not allowed account status'() {
         given:
         accountStatusClient.getAccountStatus('user-id') >> accountStatus
@@ -55,6 +65,20 @@ class OffersServiceTest extends Specification {
     }
 
     private static Offer offer() {
-        return new Offer(0L, '', URI.create('https://google.com'))
+        return new Offer(
+                0L,                                    // id
+                'Test Offer Title',                    // title
+                'Test offer description',              // description
+                new BigDecimal('99.99'),              // price
+                OfferCategory.ELECTRONICS,             // category
+                OfferStatus.DRAFT,                     // status (default)
+                URI.create('https://google.com'),      // imageUrl
+                'seller-123',                          // sellerId
+                LocalDateTime.now(),                   // createdAt (default)
+                LocalDateTime.now(),                   // updatedAt (default)
+                null,                                  // expiresAt (default)
+                [] as Set<String>,                     // tags (default)
+                0L                                     // viewCount (default)
+        )
     }
 }

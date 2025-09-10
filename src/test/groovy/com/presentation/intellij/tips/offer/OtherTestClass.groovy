@@ -1,6 +1,7 @@
 package com.presentation.intellij.tips.offer
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 
 class OtherTestClass extends Specification {
@@ -10,6 +11,7 @@ class OtherTestClass extends Specification {
         "hello".toUpperCase() == "HELLO"
     }
 
+    @Unroll
     def "should find max value with where clause"() {
         expect:
         Math.max(a, b) == result
