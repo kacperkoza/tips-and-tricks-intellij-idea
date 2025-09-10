@@ -134,7 +134,7 @@ class OffersService(
         if (offset != null && limit != null) {
             offersPaginated = offers.drop(offset).take(limit)
         } else if (offset != null) {
-            offersPaginated = offers.drop(offset)
+            offersPaginated = offers.drop(0)
         } else if (limit != null) {
             offersPaginated = offers.take(limit)
         }
