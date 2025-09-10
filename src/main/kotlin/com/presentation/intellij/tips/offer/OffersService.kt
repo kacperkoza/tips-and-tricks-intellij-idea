@@ -130,7 +130,7 @@ class OffersService(
     }
 
     private fun getOffersPaginated(limit: Int?, offset: Int?, offers: List<Offer>): List<Offer> {
-        var offersPaginated: List<Offer> = emptyList()
+        var offersPaginated: List<Offer>? = null
         if (offset != null && limit != null) {
             offersPaginated = offers.drop(offset).take(limit)
         } else if (offset != null) {
@@ -138,7 +138,7 @@ class OffersService(
         } else if (limit != null) {
             offersPaginated = offers.take(limit)
         }
-        return offersPaginated
+        return offersPaginated ?: offers
     }
 }
 
