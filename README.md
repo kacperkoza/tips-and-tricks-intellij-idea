@@ -1,6 +1,6 @@
 # Tips & Tricks in IntelliJ IDEA You Already Know
 
-### My producivity
+## My producivity
 
 Find action `Productivity Guide`.
 
@@ -10,7 +10,7 @@ So I think this is the biggest part of my daily work in the IDE and it should be
 
 ![img.png](img.png)
 
-### Copilot
+## Copilot
 
 Run app:  
 `⌃ ⌃` - Run anything
@@ -23,7 +23,7 @@ Open gradle tab with `⌘ ⇧ A` (and type `Gradle`). Filter `Gradle` tab with `
 
 `⌥ ⏎` - and `Open GitHub Copilot Inline Chat`
 
-### Find action
+## Find action
 
 `⌘ ⇧ A` - `Find Action` ❤️  
 Search for any action, setting, plugin, shortcut. Search for something that you need at the moment.
@@ -32,7 +32,7 @@ Type action name, like `Rename`, `Go to file`, `Open Copilot chat`, `Gradle`. As
 If you see text like this `Enter Distraction Free Mode` / `Hide All Windows` - you will find action with this name in
 `⌘ ⇧ A`
 
-#### other core navigation
+### other core navigation
 
 `⌘ O` - `Go to class`  
 `⌘ ⇧ O` - `Go to file`  
@@ -107,7 +107,7 @@ Search in `Find Action`:
 - `Move caret (...)`
 - `Move caret with selection (...)`
 
-### Replace all @Unroll [task]
+## Replace all @Unroll
 
 **Search and match**
 `⌘ ⇧ F` and  
@@ -133,7 +133,7 @@ go to test directory
 global reformat `⌘ ⌥ L`
 Use mnemonics to optimize import and select other options
 
-### Code editing
+## Code editing
 
 `F2` - Next highlighted error
 `⇧ F2` - Previous highlighted error
@@ -150,7 +150,7 @@ Find `⌘ F` 'offers' and use `⌘ G` and `⌘ ⇧ G`
 
 `⌘ ⇧ ⌫` - Last edit location
 
-### Live templates, postfix completion, surround with
+## Live templates, postfix completion, surround with
 
 type `ifn` in editor
 
@@ -170,13 +170,14 @@ Visit postfix completion in the settings and check other options
 
 `⌘ ⇧ ⏎` - Complete current statement
 
-Multiline cursor
-
+Multiline cursor:
 - double press and hold `⌥`. add cursor with arrow
 - `⌃ G` - Find next occurrence
 - hold `⇧ ⌥` and click
 
-### Debugging, running, terminal
+https://www.jetbrains.com/help/idea/multicursor.html
+
+## Debugging, running, terminal
 
 `⌃ ⌃` - Run anything
 Look for the `OffersServiceTest` and run
