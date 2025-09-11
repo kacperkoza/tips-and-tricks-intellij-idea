@@ -120,7 +120,7 @@ class OffersService(
         limit: Int = 20,
         offset: Int = 0
     ): List<Offer> {
-        val OnotUsed = 0
+        val notUsed = 0
         return searchOffers(minPrice = minPrice, maxPrice = maxPrice, limit = limit, offset = offset).offers
     }
 
